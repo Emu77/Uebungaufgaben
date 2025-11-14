@@ -1,11 +1,15 @@
 ﻿// ==============================================
 // C# Lösungen zu "50 C# Übungsaufgaben für absolute Anfänger"
-// Mit Überschrift und Aufgabentext vor jeder Lösungsausführung
+// - Menü: Aufgabennummer wählen
+// - Zeigt Level, Titel, Beschreibung
+// - Zeigt den Lösungscode als Text
+// - Führt die Lösung aus
 // ==============================================
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
-namespace Uebungsaufgaben
+namespace Loesungen
 {
     internal class Program
     {
@@ -23,11 +27,18 @@ namespace Uebungsaufgaben
                     Console.WriteLine("Ungültige Eingabe. Bitte 0 bis 50 eingeben.");
                     continue;
                 }
-                if (n == 0) break;
+                if (n == 0)
+                    break;
 
                 try
                 {
                     ShowTaskInfo(n);
+
+                    Console.WriteLine("Lösungscode:");
+                    Console.WriteLine("--------------------------------");
+                    Console.WriteLine(GetSolutionCode(n));
+                    Console.WriteLine("--------------------------------\n");
+
                     RunTask(n);
                 }
                 catch (Exception ex)
@@ -37,6 +48,9 @@ namespace Uebungsaufgaben
             }
         }
 
+        // ----------------------------------------------------
+        // Hilfsfunktionen
+        // ----------------------------------------------------
         static CultureInfo DE = new CultureInfo("de-DE");
 
         static double ReadDouble(string prompt)
@@ -55,7 +69,9 @@ namespace Uebungsaufgaben
             return int.TryParse(Console.ReadLine(), out var i) ? i : 0;
         }
 
-        // ---------- Überschrift + Aufgabentext ausgeben ----------
+        // ----------------------------------------------------
+        // Aufgaben-Infos
+        // ----------------------------------------------------
         static void ShowTaskInfo(int n)
         {
             int level = (n - 1) / 10 + 1;
@@ -143,7 +159,307 @@ namespace Uebungsaufgaben
             Console.WriteLine("================================\n");
         }
 
-        // ---------- Dispatcher ----------
+        // ----------------------------------------------------
+        // Lösungscode als Text
+        // ----------------------------------------------------
+        static string GetSolutionCode(int n)
+        {
+            if (SolutionCodes.TryGetValue(n, out var code))
+                return code;
+            return "// Kein Lösungscode hinterlegt.";
+        }
+
+        static readonly Dictionary<int, string> SolutionCodes = new Dictionary<int, string>
+        {
+            // Level 1
+            { 1,  @"static void A1() {
+    Console.WriteLine(""Hallo Welt!"");
+}" },
+            { 2,  @"static void A2() {
+    Console.WriteLine(""Ich heiße Alex."");
+}" },
+            { 3,  @"static void A3() {
+    Console.WriteLine(""Zeile 1"");
+    Console.WriteLine(""Zeile 2"");
+    Console.WriteLine(""Zeile 3"");
+}" },
+            { 4,  @"static void A4() {
+    for (int i = 1; i <= 5; i++)
+        Console.WriteLine(i);
+}" },
+            { 5,  @"static void A5() {
+    Console.WriteLine(""5 + 3 = 8"");
+}" },
+            { 6,  @"static void A6() {
+    Console.WriteLine(""  _____  "");
+    Console.WriteLine("" /     \\"");
+    Console.WriteLine(""|  o o  |"");
+    Console.WriteLine(""|   ^   |"");
+    Console.WriteLine(""| \\\\_/  |"");
+    Console.WriteLine("" \\\\_____/"");
+}" },
+            { 7,  @"static void A7() {
+    Console.WriteLine(""\""""Stay hungry, stay foolish.\"""" – Steve Jobs"");
+}" },
+            { 8,  @"static void A8() {
+    Console.WriteLine(""Name: Alex Muster"");
+    Console.WriteLine(""Alter: 25"");
+    Console.WriteLine(""Wohnort: Berlin"");
+}" },
+            { 9,  @"static void A9() {
+    Console.WriteLine(""Oben"");
+    Console.WriteLine();
+    Console.WriteLine(""Mitte"");
+    Console.WriteLine();
+    Console.WriteLine(""Unten"");
+}" },
+            { 10, @"static void A10() {
+    // Kommentar 1: Demonstriert Kommentare.
+    // Kommentar 2: Kommentare werden ignoriert.
+    // Kommentar 3: Benutze sie für Erklärungen.
+    Console.WriteLine(""Kommentare im Code – siehe Quelltext."");
+}" },
+
+            // Level 2
+            { 11, @"static void A11() {
+    int alter = 25;
+    Console.WriteLine(alter);
+}" },
+            { 12, @"static void A12() {
+    string name = ""Alex"";
+    Console.WriteLine(name);
+}" },
+            { 13, @"static void A13() {
+    string name = ""Alex"";
+    int alter = 25;
+    string stadt = ""Berlin"";
+    Console.WriteLine($""{name}, {alter}, {stadt}"");
+}" },
+            { 14, @"static void A14() {
+    int a = 7, b = 5;
+    Console.WriteLine(a + b);
+}" },
+            { 15, @"static void A15() {
+    int x = 10;
+    Console.WriteLine(x);
+    x = 20;
+    Console.WriteLine(x);
+}" },
+            { 16, @"static void A16() {
+    bool istSchueler = false;
+    Console.WriteLine(istSchueler);
+}" },
+            { 17, @"static void A17() {
+    double t = 21.5;
+    Console.WriteLine($""{t} °C"");
+}" },
+            { 18, @"static void A18() {
+    const double PI = 3.14159;
+    double r = 2;
+    Console.WriteLine(PI * r * r);
+}" },
+            { 19, @"static void A19() {
+    string s = ""C# "" + ""macht "" + ""Spaß!"";
+    Console.WriteLine(s);
+}" },
+            { 20, @"static void A20() {
+    int x = 12, y = 4;
+    Console.WriteLine($""Add:{x+y}, Sub:{x-y}, Mul:{x*y}, Div:{x/y}"");
+}" },
+
+            // Level 3
+            { 21, @"static void A21() {
+    Console.Write(""Name: "");
+    var n = Console.ReadLine();
+    Console.WriteLine($""Hallo, {n}!"");
+}" },
+            { 22, @"static void A22() {
+    Console.Write(""Alter: "");
+    if (int.TryParse(Console.ReadLine(), out int a))
+        Console.WriteLine($""Du bist {a} Jahre alt."");
+    else
+        Console.WriteLine(""Ungültige Eingabe."");
+}" },
+            { 23, @"static void A23() {
+    double a = ReadDouble(""Zahl 1: "");
+    double b = ReadDouble(""Zahl 2: "");
+    Console.WriteLine($""Summe: {a + b}"");
+}" },
+            { 24, @"static void A24() {
+    Console.Write(""Lieblingsfarbe: "");
+    var f = Console.ReadLine();
+    Console.WriteLine($""Schöne Wahl: {f}!"");
+}" },
+            { 25, @"static void A25() {
+    int alter = ReadInt(""Alter: "");
+    int jahr = DateTime.Now.Year - Math.Max(0, alter);
+    Console.WriteLine($""Geburtsjahr (ungefähr): {jahr}"");
+}" },
+            { 26, @"static void A26() {
+    double l = ReadDouble(""Länge: "");
+    double b = ReadDouble(""Breite: "");
+    Console.WriteLine($""Fläche: {l * b}"");
+}" },
+            { 27, @"static void A27() {
+    double c = ReadDouble(""°C: "");
+    double f = c * 9 / 5 + 32;
+    Console.WriteLine($""{c} °C = {f} °F"");
+}" },
+            { 28, @"static void A28() {
+    Console.Write(""Vorname: "");
+    var v = Console.ReadLine();
+    Console.Write(""Nachname: "");
+    var n = Console.ReadLine();
+    Console.WriteLine($""Willkommen, {v} {n}!"");
+}" },
+            { 29, @"static void A29() {
+    double A = ReadDouble(""A: "");
+    double B = ReadDouble(""B: "");
+    Console.WriteLine($""Add:{A+B}, Sub:{A-B}, Mul:{A*B}, Div:{(B!=0? (A/B).ToString() : ""nicht definiert"")}"");
+}" },
+            { 30, @"static void A30() {
+    const double PI = 3.14159;
+    double r = ReadDouble(""Radius: "");
+    Console.WriteLine($""Umfang: {2 * PI * r}"");
+}" },
+
+            // Level 4
+            { 31, @"static void A31() {
+    int alter = ReadInt(""Alter: "");
+    Console.WriteLine(alter >= 18 ? ""Volljährig"" : ""Nicht volljährig"");
+}" },
+            { 32, @"static void A32() {
+    int z = ReadInt(""Zahl: "");
+    Console.WriteLine(z % 2 == 0 ? ""Gerade"" : ""Ungerade"");
+}" },
+            { 33, @"static void A33() {
+    int z = ReadInt(""Zahl: "");
+    Console.WriteLine(z > 0 ? ""Positiv"" : (z < 0 ? ""Negativ"" : ""Null""));
+}" },
+            { 34, @"static void A34() {
+    int a = ReadInt(""A: "");
+    int b = ReadInt(""B: "");
+    Console.WriteLine(a > b ? a : b);
+}" },
+            { 35, @"static void A35() {
+    int p = ReadInt(""Punkte (0-100): "");
+    string note = p >= 92 ? ""1"" :
+                  p >= 81 ? ""2"" :
+                  p >= 67 ? ""3"" :
+                  p >= 50 ? ""4"" :
+                  p >= 30 ? ""5"" : ""6"";
+    Console.WriteLine($""Note: {note}"");
+}" },
+            { 36, @"static void A36() {
+    int j = ReadInt(""Jahr: "");
+    bool schalt = (j % 400 == 0) || (j % 4 == 0 && j % 100 != 0);
+    Console.WriteLine(schalt ? ""Schaltjahr"" : ""Kein Schaltjahr"");
+}" },
+            { 37, @"static void A37() {
+    const string USER = ""admin"", PASS = ""1234"";
+    Console.Write(""Benutzername: "");
+    var u = Console.ReadLine();
+    Console.Write(""Passwort: "");
+    var p = Console.ReadLine();
+    Console.WriteLine(u == USER && p == PASS ? ""Zugriff"" : ""Verweigert"");
+}" },
+            { 38, @"static void A38() {
+    double betrag = ReadDouble(""Einkauf (€): "");
+    double zahlen = betrag >= 50 ? betrag * 0.9 : betrag;
+    Console.WriteLine($""Zu zahlen: {zahlen:F2} €"");
+}" },
+            { 39, @"static void A39() {
+    double kg = ReadDouble(""Gewicht (kg): "");
+    double m = ReadDouble(""Größe (m): "");
+    double bmi = m > 0 ? kg / (m * m) : 0;
+    string kat = bmi < 18.5 ? ""Untergewicht"" :
+                 bmi < 25   ? ""Normalgewicht"" :
+                 bmi < 30   ? ""Übergewicht"" :
+                              ""Adipositas"";
+    Console.WriteLine($""BMI: {bmi:F1} – {kat}"");
+}" },
+            { 40, @"static void A40() {
+    double t = ReadDouble(""Temperatur (°C): "");
+    if (t > 30) Console.WriteLine(""Warnung: Sehr heiß!"");
+    else if (t < 0) Console.WriteLine(""Warnung: Frost!"");
+    else Console.WriteLine(""Normalbereich."");
+}" },
+
+            // Level 5
+            { 41, @"static void A41() {
+    for (int i = 1; i <= 10; i++)
+        Console.Write(i + (i < 10 ? "", "" : ""\n""));
+}" },
+            { 42, @"static void A42() {
+    for (int i = 10; i >= 0; i--)
+        Console.Write(i + (i > 0 ? "", "" : ""\n""));
+}" },
+            { 43, @"static void A43() {
+    for (int i = 2; i <= 20; i += 2)
+        Console.Write(i + (i < 20 ? "", "" : ""\n""));
+}" },
+            { 44, @"static void A44() {
+    int n = ReadInt(""Zahl: "");
+    for (int i = 1; i <= 10; i++)
+        Console.WriteLine($""{n} x {i} = {n*i}"");
+}" },
+            { 45, @"static void A45() {
+    int sum = 0;
+    for (int i = 1; i <= 100; i++)
+        sum += i;
+    Console.WriteLine(sum);
+}" },
+            { 46, @"static void A46() {
+    int f = ReadInt(""n: "");
+    long fak = 1;
+    for (int i = 2; i <= f; i++)
+        fak *= i;
+    Console.WriteLine(fak);
+}" },
+            { 47, @"static void A47() {
+    const int geheim = 17;
+    Console.WriteLine(""Ratespiel (1..50), 5 Versuche"");
+    for (int v = 1; v <= 5; v++)
+    {
+        int t = ReadInt($""Versuch {v}: "");
+        if (t == geheim)
+        {
+            Console.WriteLine(""Richtig!"");
+            return;
+        }
+        Console.WriteLine(t < geheim ? ""Zu klein."" : ""Zu groß."");
+    }
+    Console.WriteLine($""Leider nein. Die Zahl war {geheim}."");
+}" },
+            { 48, @"static void A48() {
+    double sum = 0;
+    for (int i = 1; i <= 5; i++)
+        sum += ReadDouble($""Zahl {i}: "");
+    Console.WriteLine($""Durchschnitt: {sum/5}"");
+}" },
+            { 49, @"static void A49() {
+    for (int i = 1; i <= 10; i++)
+        Console.Write((i*i) + (i < 10 ? "", "" : ""\n""));
+}" },
+            { 50, @"static void A50() {
+    const string pw = ""geheim"";
+    while (true)
+    {
+        Console.Write(""Passwort: "");
+        var e = Console.ReadLine();
+        if (e == pw)
+        {
+            Console.WriteLine(""Korrekt!"");
+            break;
+        }
+        Console.WriteLine(""Falsch, erneut versuchen."");
+    }
+}" },
+        };
+
+        // ----------------------------------------------------
+        // Dispatcher – echte Ausführung der Aufgaben
+        // ----------------------------------------------------
         static void RunTask(int n)
         {
             switch (n)
@@ -214,7 +530,10 @@ namespace Uebungsaufgaben
             }
         }
 
-        // ---------- Level 1 Lösungen ----------
+        // ----------------------------------------------------
+        // Echte Implementierungen A1..A50
+        // ----------------------------------------------------
+        // Level 1
         static void A1() { Console.WriteLine("Hallo Welt!"); }
         static void A2() { Console.WriteLine("Ich heiße Alex."); }
         static void A3() { Console.WriteLine("Zeile 1"); Console.WriteLine("Zeile 2"); Console.WriteLine("Zeile 3"); }
@@ -226,15 +545,15 @@ namespace Uebungsaufgaben
             Console.WriteLine(" /     \\");
             Console.WriteLine("|  o o  |");
             Console.WriteLine("|   ^   |");
-            Console.WriteLine("| \\\\_/  |");
-            Console.WriteLine(" \\\\_____/");
+            Console.WriteLine("| \\_/  |".Replace("\\", "\\\\"));
+            Console.WriteLine(" \\\\_____");
         }
         static void A7() { Console.WriteLine("\"Stay hungry, stay foolish.\" – Steve Jobs"); }
         static void A8() { Console.WriteLine("Name: Alex Muster"); Console.WriteLine("Alter: 25"); Console.WriteLine("Wohnort: Berlin"); }
         static void A9() { Console.WriteLine("Oben"); Console.WriteLine(); Console.WriteLine("Mitte"); Console.WriteLine(); Console.WriteLine("Unten"); }
         static void A10() { Console.WriteLine("Kommentare im Code – siehe Quelltext."); }
 
-        // ---------- Level 2 Lösungen ----------
+        // Level 2
         static void A11() { int alter = 25; Console.WriteLine(alter); }
         static void A12() { string name = "Alex"; Console.WriteLine(name); }
         static void A13() { string name = "Alex"; int alter = 25; string stadt = "Berlin"; Console.WriteLine($"{name}, {alter}, {stadt}"); }
@@ -246,7 +565,7 @@ namespace Uebungsaufgaben
         static void A19() { string s = "C# " + "macht " + "Spaß!"; Console.WriteLine(s); }
         static void A20() { int x = 12, y = 4; Console.WriteLine($"Add:{x + y}, Sub:{x - y}, Mul:{x * y}, Div:{x / y}"); }
 
-        // ---------- Level 3 Lösungen ----------
+        // Level 3
         static void A21() { Console.Write("Name: "); var n = Console.ReadLine(); Console.WriteLine($"Hallo, {n}!"); }
         static void A22() { Console.Write("Alter: "); if (int.TryParse(Console.ReadLine(), out int a)) Console.WriteLine($"Du bist {a} Jahre alt."); else Console.WriteLine("Ungültige Eingabe."); }
         static void A23() { double a = ReadDouble("Zahl 1: "); double b = ReadDouble("Zahl 2: "); Console.WriteLine($"Summe: {a + b}"); }
@@ -258,7 +577,7 @@ namespace Uebungsaufgaben
         static void A29() { double A = ReadDouble("A: "); double B = ReadDouble("B: "); Console.WriteLine($"Add:{A + B}, Sub:{A - B}, Mul:{A * B}, Div:{(B != 0 ? (A / B).ToString() : "nicht definiert")}"); }
         static void A30() { const double PI = 3.14159; double r = ReadDouble("Radius: "); Console.WriteLine($"Umfang: {2 * PI * r}"); }
 
-        // ---------- Level 4 Lösungen ----------
+        // Level 4
         static void A31() { int alter = ReadInt("Alter: "); Console.WriteLine(alter >= 18 ? "Volljährig" : "Nicht volljährig"); }
         static void A32() { int z = ReadInt("Zahl: "); Console.WriteLine(z % 2 == 0 ? "Gerade" : "Ungerade"); }
         static void A33() { int z = ReadInt("Zahl: "); Console.WriteLine(z > 0 ? "Positiv" : (z < 0 ? "Negativ" : "Null")); }
@@ -270,7 +589,7 @@ namespace Uebungsaufgaben
         static void A39() { double kg = ReadDouble("Gewicht (kg): "); double m = ReadDouble("Größe (m): "); double bmi = m > 0 ? kg / (m * m) : 0; string kat = bmi < 18.5 ? "Untergewicht" : bmi < 25 ? "Normalgewicht" : bmi < 30 ? "Übergewicht" : "Adipositas"; Console.WriteLine($"BMI: {bmi:F1} – {kat}"); }
         static void A40() { double t = ReadDouble("Temperatur (°C): "); if (t > 30) Console.WriteLine("Warnung: Sehr heiß!"); else if (t < 0) Console.WriteLine("Warnung: Frost!"); else Console.WriteLine("Normalbereich."); }
 
-        // ---------- Level 5 Lösungen ----------
+        // Level 5
         static void A41() { for (int i = 1; i <= 10; i++) Console.Write(i + (i < 10 ? ", " : "\n")); }
         static void A42() { for (int i = 10; i >= 0; i--) Console.Write(i + (i > 0 ? ", " : "\n")); }
         static void A43() { for (int i = 2; i <= 20; i += 2) Console.Write(i + (i < 20 ? ", " : "\n")); }
